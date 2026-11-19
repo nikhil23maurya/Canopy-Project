@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f8fb">
+<meta name="description" content="Run reproducible browser experiments to compare Huffman archive sizes with original bytes and browser GZIP.">
+<title>Live compression benchmarks · Huffman Studio</title>
+<link rel="icon" href="/assets/mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css?v=3">
+<script type="module" src="/benchmarks.mjs?v=3"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><div class="wrap header-inner">
+<a class="brand" href="/" aria-label="Huffman Studio home"><span class="mark"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5h14M5 19h14M8 8v8m8-8v8M8 12h8"/></svg></span>Huffman<span class="studio-word">Studio</span></a>
+<nav aria-label="Main navigation"><a href="/">Overview</a><a href="/workspace/">Workspace</a><a href="/lab/">Algorithm lab</a><a href="/benchmarks/" aria-current="page">Benchmarks</a></nav>
+<a class="button small dark header-cta" href="/workspace/">Open workspace <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18 18 6M7 6h11v11"/></svg></a>
+</div></header>
+<main id="main">
+<section class="wrap inner-head benchmark-head">
+  <div><p class="breadcrumb"><a href="/">Overview</a><span aria-hidden="true">/</span> Benchmarks</p><h1>Compression benchmarks</h1><p class="lede">Compare actual archive sizes across five samples and check each restored file byte for byte.</p></div>
+  <button class="button dark" id="run-bench" type="button">Run benchmark <span aria-hidden="true">→</span></button>
+</section>
+<section class="wrap benchmark-content">
+  <div class="panel benchmark-panel">
+    <div class="section-bar"><div><h2>Archive size by sample</h2><p>Each bar is scaled against that sample’s original byte count.</p></div><span class="small-info" id="bench-status" role="status">Ready to run</span></div>
+    <div id="bench-empty"><p>Run the benchmark to measure the five samples in your browser.</p></div>
+    <div id="bench-results" hidden>
+      <div class="legend" aria-label="Bar legend"><span><i class="huf-swatch"></i> Huffman archive</span><span><i class="gzip-swatch"></i> Browser GZIP</span><span><i class="baseline-swatch"></i> Original size</span></div>
+      <div id="bench-bars"></div>
+      <div class="table-wrap"><table><thead><tr><th scope="col">Sample</th><th scope="col">Original</th><th scope="col">HUF1</th><th scope="col">Saved</th><th scope="col">GZIP</th><th scope="col">Round trip</th></tr></thead><tbody id="bench-table"></tbody></table></div>
+    </div>
+  </div>
+  <div class="bench-explain">
+    <article><h2>Byte distribution</h2><p>A file dominated by a few byte values gives Huffman more opportunities to assign short codes. Uniform bytes tend to use fixed-length codes.</p></article>
+    <article><h2>Archive overhead</h2><p>Even when the bitstream shrinks, a tiny file may grow after the header and codebook are added. The table includes both.</p></article>
+    <article><h2>GZIP baseline</h2><p>GZIP’s DEFLATE combines dictionary matching with Huffman coding. Its size shows what a different codec does on these samples.</p></article>
+  </div>
+</section>
+</main>
+<footer class="site-footer"><div class="wrap footer-inner">
+<a class="brand" href="/"><span class="mark"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5h14M5 19h14M8 8v8m8-8v8M8 12h8"/></svg></span>Huffman<span class="studio-word">Studio</span></a>
+<p>Design &amp; Analysis of Algorithms · University of Delhi</p>
+<a href="/lab/#references">References <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18 18 6M7 6h11v11"/></svg></a>
+</div></footer>
+</body>
+</html>

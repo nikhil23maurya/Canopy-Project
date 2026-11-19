@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f8fb">
+<meta name="description" content="Build a Huffman tree one merge at a time and see canonical codes turn text into a bitstream.">
+<title>Interactive algorithm lab · Huffman Studio</title>
+<link rel="icon" href="/assets/mark.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/style.css?v=3">
+<script type="module" src="/lab.mjs?v=3"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><div class="wrap header-inner">
+<a class="brand" href="/" aria-label="Huffman Studio home"><span class="mark"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5h14M5 19h14M8 8v8m8-8v8M8 12h8"/></svg></span>Huffman<span class="studio-word">Studio</span></a>
+<nav aria-label="Main navigation"><a href="/">Overview</a><a href="/workspace/">Workspace</a><a href="/lab/" aria-current="page">Algorithm lab</a><a href="/benchmarks/">Benchmarks</a></nav>
+<a class="button small dark header-cta" href="/workspace/">Open workspace <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18 18 6M7 6h11v11"/></svg></a>
+</div></header>
+<main id="main">
+<section class="wrap inner-head">
+  <div><p class="breadcrumb"><a href="/">Overview</a><span aria-hidden="true">/</span> Algorithm lab</p><h1>Build the Huffman tree</h1><p class="lede">Start with byte frequencies, merge the two lightest nodes, then use the final code lengths to encode the message.</p></div>
+</section>
+<section class="wrap lab-area">
+  <form class="panel lab-form" id="lab-form">
+    <div><label for="lab-input">Input text</label><input id="lab-input" value="BANANA_BANDANA" maxlength="80" spellcheck="false" autocomplete="off" required></div>
+    <button class="button dark" type="submit">Build tree <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></button>
+    <p id="lab-error" role="status">Up to 18 distinct UTF-8 byte values.</p>
+  </form>
+  <div class="lab-grid">
+    <section class="panel lab-queue" aria-labelledby="queue-title">
+      <div class="section-bar"><h2 id="queue-title">Priority queue</h2><span id="queue-count" class="small-info"></span></div>
+      <p class="panel-description">Sorted by weight. The two highlighted entries merge next.</p>
+      <ol id="queue"></ol>
+    </section>
+    <section class="panel tree-panel" aria-labelledby="tree-title">
+      <div class="section-bar"><div><h2 id="tree-title">Tree construction</h2><p id="tree-summary" aria-live="polite"></p></div><span class="mono small-info" id="step-count"></span></div>
+      <div class="tree-scroll"><div id="tree" class="tree" aria-hidden="true"></div></div>
+      <div class="tree-actions">
+        <button type="button" class="button small outline" id="lab-reset" aria-label="Reset merges">↺</button>
+        <button type="button" class="button small outline" id="lab-prev" aria-label="Previous merge">←</button>
+        <button type="button" class="button small dark" id="lab-play">Play merges</button>
+        <button type="button" class="button small outline" id="lab-next">Next merge →</button>
+        <label class="scrub-label" for="lab-scrub">Merge</label><input type="range" id="lab-scrub" min="0" value="0" aria-label="Merge step">
+      </div>
+    </section>
+  </div>
+  <section class="panel encode-panel" id="encode-panel" aria-labelledby="encode-title" hidden>
+    <div class="section-bar"><div><h2 id="encode-title">Encode and decode</h2><p>Hover or focus a byte to highlight its canonical code. Decode to watch the stream return to bytes.</p></div><button type="button" class="button small dark" id="decode">Decode bitstream <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></button></div>
+    <div class="code-lanes"><div><span class="small-info">Original bytes</span><div id="source-chips" class="chips"></div></div><div><span class="small-info">Canonical bitstream</span><div id="bits-chips" class="chips"></div></div><div><span class="small-info">Restored bytes</span><div id="decoded-chips" class="chips" aria-live="polite"></div></div></div>
+    <div class="encode-summary"><span id="encode-summary"></span><span id="decode-status" role="status"></span></div>
+    <details><summary>See canonical codebook</summary><div class="chips" id="lab-codebook"></div></details>
+  </section>
+  <section class="panel notes" id="references"><h2>Technical notes</h2>
+    <details><summary>Why is the greedy choice optimal?</summary><p>An optimal binary prefix tree can place the two least frequent symbols as deepest siblings. Swapping those two with any deeper leaves cannot increase the weighted path length. Replace their parent with a single combined symbol, solve the smaller problem, then expand the pair.</p></details>
+    <details><summary>How is the archive structured?</summary><p>HUF1 stores an 18-byte fixed header, 2 bytes per distinct symbol for its value and code length, and the packed bitstream. Canonical coding preserves the lengths from the merge tree and assigns the codes in length-then-byte order. The tree shown above illustrates the greedy merges. The archive uses the canonical bit patterns.</p></details>
+    <details><summary>What is the running time?</summary><p>Counting and encoding take O(n) for a fixed byte alphabet. The min-heap builds the tree in O(k log k), with k ≤ 256. The browser also holds input and output byte buffers in memory during a run.</p></details>
+    <p class="source-links"><a href="https://doi.org/10.1109/JRPROC.1952.273898" target="_blank" rel="noopener noreferrer">Huffman’s original paper <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18 18 6M7 6h11v11"/></svg></a><a href="https://www.rfc-editor.org/rfc/rfc1951#section-3.2.2" target="_blank" rel="noopener noreferrer">Canonical code lengths in RFC 1951 <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18 18 6M7 6h11v11"/></svg></a></p>
+  </section>
+</section>
+</main>
+<footer class="site-footer"><div class="wrap footer-inner">
+<a class="brand" href="/"><span class="mark"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 5h14M5 19h14M8 8v8m8-8v8M8 12h8"/></svg></span>Huffman<span class="studio-word">Studio</span></a>
+<p>Design &amp; Analysis of Algorithms · University of Delhi</p>
+<a href="/lab/#references">References <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18 18 6M7 6h11v11"/></svg></a>
+</div></footer>
+</body>
+</html>

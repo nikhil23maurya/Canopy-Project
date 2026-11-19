@@ -1,0 +1,89 @@
+{
+  "sizes": [
+    256,
+    512,
+    1024,
+    2048,
+    4096
+  ],
+  "comp": [
+    7.53,
+    14.28,
+    29.1,
+    31.03,
+    59.59
+  ],
+  "dec": [
+    9.48,
+    19.18,
+    32.69,
+    65.58,
+    126.02
+  ],
+  "combined": [
+    16.99,
+    33.26,
+    59.45,
+    95.76,
+    189.44
+  ],
+  "fixtures": [
+    {
+      "id": "logs",
+      "label": "Device logs",
+      "original": 45988,
+      "huf": 28376,
+      "gzip": 3502
+    },
+    {
+      "id": "telemetry",
+      "label": "Telemetry CSV",
+      "original": 22248,
+      "huf": 11295,
+      "gzip": 5772
+    },
+    {
+      "id": "binary",
+      "label": "Uniform binary",
+      "original": 65536,
+      "huf": 66066,
+      "gzip": 65574
+    },
+    {
+      "id": "tiny",
+      "label": "Tiny text",
+      "original": 12,
+      "huf": 29,
+      "gzip": 29
+    },
+    {
+      "id": "packed",
+      "label": "Already compressed",
+      "original": 3487,
+      "huf": 3630,
+      "gzip": 2377
+    }
+  ],
+  "edge": {
+    "empty": {
+      "archiveBytes": 18,
+      "payloadBits": 0
+    },
+    "single": {
+      "archiveBytes": 148,
+      "payloadBits": 1024
+    },
+    "allSymbols": {
+      "archiveBytes": 786,
+      "payloadBits": 2048
+    },
+    "limit": {
+      "archiveBytes": 3145748,
+      "payloadBits": 25165824
+    }
+  },
+  "optChecks": 125,
+  "node": "v24.22.3",
+  "arch": "x64",
+  "cpu": "AMD EPYC 9V74 80-Core Processor"
+}

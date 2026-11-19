@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f7f2">
+  <meta name="description" content="Compress a file or restore the original in your browser with Canopy.">
+  <title>Compress a file · Canopy</title>
+  <link rel="icon" href="/assets/canopy.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/canopy.css?v=1">
+  <script type="module" src="/canopy.mjs?v=1"></script>
+</head>
+<body data-mode="compress">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="top"><div class="wrap top-inner">
+    <a class="wordmark" href="/" aria-label="Canopy home"><span class="mark"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M19 5c-7 0-12 2.8-12 8a4.5 4.5 0 0 0 4.5 4.5C16.5 17.5 19 13 19 5Z"/><path d="M5 19c2.8-4.1 5.1-6.2 8.5-8"/></svg></span>Canopy</a>
+    <nav aria-label="File tools">
+      <a href="/" data-switch="compress" aria-current="page">Compress</a>
+      <a href="/restore/" data-switch="restore">Restore</a>
+    </nav>
+  </div></header>
+  <main id="main" class="wrap">
+    <div class="intro">
+      <h1 id="page-title">Compress a file</h1>
+      <p id="page-description">Make a file smaller for storage or sharing.</p>
+    </div>
+    <section class="tool" aria-labelledby="page-title">
+      <input type="file" id="file-input" hidden>
+      <div id="pick-view">
+        <div class="drop-zone" id="drop-zone">
+          <span class="file-illustration" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H6V3h1Zm7 0v5h4M10 6h1m-1 3h1m-1 3h1m-1 3h1m-1 3h1"/></svg></span>
+          <p id="drop-label">Drop your file here</p>
+          <span class="limit" id="file-limit">One file up to 24 MiB</span>
+          <button class="button primary" type="button" id="pick-button"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4m-4 4 4-4 4 4M4 16v4h16v-4"/></svg><span id="pick-label">Choose file</span></button>
+        </div>
+        <div class="example-row"><button type="button" id="sample" class="link-button">Try a sample file</button></div>
+      </div>
+
+      <div id="busy-view" class="busy-view" hidden>
+        <div class="busy-title"><span class="busy-dot" aria-hidden="true"></span><h2 id="busy-title">Preparing file…</h2></div>
+        <p class="filename" id="busy-filename"></p>
+        <progress id="progress" aria-label="File processing progress" max="100"></progress>
+        <button class="link-button" type="button" id="cancel">Cancel</button>
+      </div>
+
+      <div id="result-view" class="result-view" hidden>
+        <div class="result-title"><span class="success-icon" aria-hidden="true"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L19 7"/></svg></span><div><h2 id="result-heading"></h2><p class="filename" id="result-filename"></p></div></div>
+        <div id="sizes" class="sizes"></div>
+        <p id="result-detail" class="result-detail"></p>
+        <div class="actions">
+          <a class="button primary" id="download"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12m-4-4 4 4 4-4M4 16v4h16v-4"/></svg><span id="download-label">Download file</span></a>
+          <button class="button secondary" type="button" id="restore-current">Restore this archive</button>
+          <button class="link-button another" type="button" id="another">Choose another file</button>
+        </div>
+      </div>
+
+      <p class="error" id="error" role="alert" hidden></p>
+      <p class="screen-reader" id="status" role="status"></p>
+      <div class="privacy"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="11" width="12" height="9" rx="2"/><path d="M9 11V8a3 3 0 0 1 6 0v3"/></svg><span>Your files stay on this device.</span></div>
+    </section>
+    <section class="help" aria-label="Help with your files">
+      <details><summary>How do I open the file I downloaded?<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="m8 10 4 4 4-4"/></svg></summary><p>Open <a href="/restore/" data-switch="restore">Restore</a> and choose the <code>.huf</code> file you downloaded from Canopy. You can then download the original in its original format.</p></details>
+      <details><summary>Why did my file get bigger?<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="m8 10 4 4 4-4"/></svg></summary><p>Photos, videos and ZIP files are often already compressed. Very small files can also grow because Canopy adds information needed to restore them. Keep the original if it’s smaller.</p></details>
+    </section>
+  </main>
+  <footer><div class="wrap">Canopy · File tools</div></footer>
+</body>
+</html>
